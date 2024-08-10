@@ -50,4 +50,10 @@ class User extends Authenticatable
          // user1：tweet多数
         return $this->hasMany(Tweet::class);
     }
+
+  // 🔽 追加
+    public function likes()
+    {
+        return $this->belongsToMany(Tweet::class)->withTimestamps();
+    }
 }

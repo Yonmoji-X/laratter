@@ -1,8 +1,10 @@
 <?php
 
 use App\Http\Controllers\ProfileController;
-// 🔽 追加
+// 🔽 追加（TweetControllerファイルを使うので読み込む）
 use App\Http\Controllers\TweetController;
+// 🔽 追加（TweetLikeControllerファイルを使うので読み込む）
+use App\Http\Controllers\TweetLikeController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -19,6 +21,10 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
     // 🔽 追加
     Route::resource('tweets', TweetController::class);
+    // 🔽 追加（読み込んだTweetLikeControllerのstoreの関数を使う。）
+    Route::post('/tweets.{tweet}/like',
+    [TweetLikeController::class, 'store'])->name('tweets.like');
+    Route::delete('/tweets/{tweet}/like',[TweetLikeController::class, 'destroy'])->name('tweets.dislike');
 });
 
 require __DIR__.'/auth.php';
